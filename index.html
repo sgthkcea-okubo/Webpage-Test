@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Experiment</title>
+    <script src="https://unpkg.com/jspsych@8.2.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@2.1.0"></script>
+    <link href="https://unpkg.com/jspsych@8.2.2/css/jspsych.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <script src="https://sgthkcea-okubo.github.io/jspsych-psychophysics/jspsych-psychophysics.js"></script>
+    <script src="https://sgthkcea-okubo.github.io/jsPsychSheet/jspsychsheet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body></body>
+
+<script>
+    // var jsPsych = initJsPsych({
+    //     on_finish: function() {
+    //         jsPsych.data.displayData();
+    //     }
+    // });
+
+    const jsPsych = initJsPsych({
+        timeline: timeline,
+        on_finish: function() {
+            url = "https://script.google.com/macros/s/AKfycbzkUmgvdu3QymHuirCUQIHgAtFa_8OvnOdKuE443qtJDOMCLdDWpaOC7P0jq8o1VF36/exec";
+            jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
+        }
+    });
+
+    var timeline = [];
+
+    var condition = jsPsych.randomization.sampleWithReplacement([0, 1], 1);
+
+    var welcome = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus:
+            '<p>（インフォームドコンセント）</p>',
+        choices: ['アンケートに進む']
+    };
+    timeline.push(welcome);
+
+    const colorset1_1 = ["blue"];
+    const colorset1_2 = ["yellow"];
+    const colorset1 = [colorset1_1, colorset1_2];
+
+    const num_of_reps = 1;
+
+    const num_of_loops = num_of_reps * 5;
+
+    ptns1 = [0, 1, 2, 3, 4];
+
+    var shuffledArray = jsPsych.randomization.repeat(ptns1, num_of_reps);
+
+    for (var i = 0; i < num_of_loops; i++) {
+
+        var colorcond1 = jsPsych.randomization.sampleWithReplacement(colorset1, 1);
+        var colorcond2 = jsPsych.randomization.sampleWithReplacement(_.difference(colorset1, colorcond1), 1);
+
+        var color1 = jsPsych.randomization.sampleWithReplacement(colorcond1, 1);
+
+        if (condition == 0) {
+            var color2 = jsPsych.randomization.sampleWithReplacement(colorcond1, 1);
+        } else if (condition == 1) {
+            var color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1);
+        }
+
+        var ptn1 =  [
+            {
+                obj_type: 'circle', // means a circle
+                startX: -200, // location in the canvas
+                startY: 0,
+                origin_center: true,
+                radius: 125, // of the circle
+                line_color: color1,
+                fill_color: color1,
+            }, 
+            {
+                obj_type: 'circle', // means a circle
+                startX: 200, // location in the canvas
+                startY: 0,
+                origin_center: true,
+                radius: 75, // of the circle
+                line_color: color2,
+                fill_color: color2,
+            }, 
+        ];
+
+        var ptn2 = [
+            {
+                obj_type: 'circle', // means a circle
+                startX: -200, // location in the canvas
+                startY: 0,
+                origin_center: true,
+                radius: 101, // of the circle
+                line_color: color1,
+                fill_color: color1,
+            }, 
+            {
+                obj_type: 'circle', // means a circle
+                startX: 200, // location in the canvas
+                startY: 0,
+                origin_center: true,
+                radius: 99, // of the circle
+                line_color: color2,
+                fill_color: color2,
+            }, 
+        ];
+
+        var ptn3 = [
+            {
+                obj_type: 'circle', // means a circle
+                startX: -200, // location in the canvas
+                startY: 0,
+                origin_center: true,
+                radius: 100, // of the circle
+                line_color: color1,
+                fill_color: color1,
+            }, 
+            {
+                obj_type: 'circle', // means a circle
+                startX: 200, // location in the canvas
+                startY: 0,
+                origin_center: true,
+                radius: 100, // of the circle
+                line_color: color2,
+                fill_color: color2,
+            }, 
+        ];
+
+        var ptn4 = [
+            {
+                obj_type: 'circle', // means a circle
+                startX: -200, // location in the canvas
+                startY: 0,
+                origin_center: true,
+                radius: 99, // of the circle
+                line_color: color1,
+                fill_color: color1,
+            }, 
+            {
+                obj_type: 'circle', // means a circle
+                startX: 200, // location in the canvas
+                startY: 0,
+                origin_center: true,
+                radius: 101, // of the circle
+                line_color: color2,
+                fill_color: color2,
+            }, 
+        ];
+
+        var ptn5 = [
+            {
+                obj_type: 'circle', // means a circle
+                startX: -200, // location in the canvas
+                startY: 0,
+                origin_center: true,
+                radius: 75, // of the circle
+                line_color: color1,
+                fill_color: color1,
+            }, 
+            {
+                obj_type: 'circle', // means a circle
+                startX: 200, // location in the canvas
+                startY: 0,
+                origin_center: true,
+                radius: 125, // of the circle
+                line_color: color2,
+                fill_color: color2,
+            }, 
+        ];
+
+        var ptns2 = [ptn1, ptn2, ptn3, ptn4, ptn5];
+        var ptns3 = ['左の図形が右の図形よりも大きい', '左の図形が右の図形よりも大きい', '左右の図形が同じ大きさ', '右の図形が左の図形よりも大きい', '右の図形が左の図形よりも大きい'];
+
+        var illusion_or_not = {
+            type: jsPsychPsychophysics,
+            stimuli: ptns2[shuffledArray[i]],
+            response_type: 'button',
+            prompt: `<div style="width:1000px;">
+                <p style="text-align:center">画像に示された2つの図形について、大きいものはどちらか？</p>
+                </div>`, 
+            name: 'illusion_or_not_' + i +"_" + ptns2[shuffledArray[i]], 
+            button_choices: ['左の図形が右の図形よりも大きい', '左右の図形が同じ大きさ', '右の図形が左の図形よりも大きい'], 
+            canvas_width: 1000, 
+            canvas_height: 400, 
+            background_color: 'white', 
+            required: true, 
+            origin_center: true,
+            //horizontal: true, 
+        };
+        timeline.push(illusion_or_not);
+
+        var confidence_level = {
+            type: jsPsychHtmlSliderResponse,
+            stimulus: `<div style="width:500px;">
+                <p>直前の質問が正しい確率について、<br>自己評価したものを回答してください。</p>
+                </div>`,
+            name: 'confidence_level_' + i,
+            require_movement: true,
+            labels: ['0%', '100%'], 
+        };
+        timeline.push(confidence_level);
+
+        var model_answer = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: "正答は「" + ptns3[shuffledArray[i]] + "」です。",
+            name: "model_answer_" + i,
+            choices: ['次に進む']
+        };
+        timeline.push(model_answer);
+    }
+
+    var age = {
+      type: jsPsychSurveyText,
+      questions: [
+        {prompt: '年齢を入力してください', columns: 3, required: true, name: 'age'},
+      ],
+      button_label: '次へ',
+    };
+    timeline.push(age);
+
+    var gender = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {prompt: "性別を選択してください", options: ['男性', '女性', 'その他'], required: true, horizontal: true, name: 'gender'},
+      ],
+      button_label: '次へ',
+    };
+    timeline.push(gender);
+
+    var finish = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: '<p>これでアンケートは終わりです。<br>' +
+            'ありがとうございました。(press the "A" key to send data.)</p>',
+        choices: 'a' //'NO_KEYS'
+    };
+    timeline.push(finish);
+
+    jsPsych.run(timeline);
+
+</script>
+
+</html>
