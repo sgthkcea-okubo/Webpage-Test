@@ -27,8 +27,13 @@
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function() {
+            function escapeCSV(value) {
+              return `"${String(value).replace(/"/g, '""')}"`;
+            }
+
             url = "https://script.google.com/macros/s/AKfycbw2lLU_IIebHnUlAV-XT6-ZagKFaqjmCKizfSLsRFY5yvazMGTnd16XzlKrQ4k5LNc/exec";
             //jsPsych.data.displayData();
+            
             fetch(url, {
               method: "POST",
               headers: {
