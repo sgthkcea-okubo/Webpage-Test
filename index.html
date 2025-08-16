@@ -24,11 +24,12 @@
     // timelineの定義を先に移動
     var timeline = 
 
-    let jsPsych = initJsPsych({
+    const jsPsych = initJsPsych({
         timeline: timeline,
-        on_finish: function () {
+        on_finish: function() {
             url = "https://script.google.com/macros/s/AKfycbyq5Ce-PodSMXyVe089N0RQ2QbIzRrB_KbJ3NDaheR7icbRmF349nvdnzZXW7TjiVVL/exec";
-            jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
+            jsPsych.data.displayData();
+            //jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
         }
     });
 
