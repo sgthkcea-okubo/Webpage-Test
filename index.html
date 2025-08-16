@@ -23,6 +23,14 @@
     // timelineの定義を先に移動
     var timeline = [];
 
+    const jsPsych = initJsPsych({
+        timeline: timeline,
+        on_finish: function () {
+            url = "https://script.google.com/macros/s/AKfycbwAWhEmQ1w-jnAPvtOmlzykqsUS9ZHZv0ZRpa92KpV-_4938mt0bWAySZG-NZ2x8qU/exec";
+            jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
+        }
+    });
+
     // 条件のランダムサンプリング
     var condition = jsPsych.randomization.sampleWithReplacement([0, 1], 1)[0];
 
@@ -164,14 +172,6 @@
         choices: 'a' //'NO_KEYS'
     };
     timeline.push(finish);
-
-    const jsPsych = initJsPsych({
-        timeline: timeline,
-        on_finish: function () {
-            url = "https://script.google.com/macros/s/AKfycbwAWhEmQ1w-jnAPvtOmlzykqsUS9ZHZv0ZRpa92KpV-_4938mt0bWAySZG-NZ2x8qU/exec";
-            jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
-        }
-    });
 
     jsPsych.run(timeline);
 
