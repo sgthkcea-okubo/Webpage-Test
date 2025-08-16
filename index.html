@@ -48,6 +48,8 @@
 
     const num_of_loops = 10;
 
+    var a = jsPsych.randomization.sampleWithReplacement([-50, 50], num_of_loops)[i];
+
     for (let i = 0; i < num_of_loops; i++) {
 
         var colorcond1 = jsPsych.randomization.sampleWithReplacement(colorset1, 1)[0];
@@ -63,7 +65,6 @@
             color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1)[0];
         }
 
-        var a = jsPsych.randomization.sampleWithReplacement([-50, 50], num_of_loops)[i];
         var b = 0;
 
         const illusion_or_not = {
@@ -88,7 +89,7 @@
             require_movement: true,
             on_load: function() {
                 const base_radius = 100;
-                const offset = a;
+                const offset = a[i];
                 const left_color = color1;
                 const right_color = color2;
                 function drawIllusion(r_diff) {
@@ -98,7 +99,7 @@
                     ctx.clearRect(0,0,canvas.width,canvas.height);
                     // 左円
                     ctx.beginPath();
-                    ctx.arc(250, 200, base_radius - offset, 0, 2 * Math.PI);
+                    ctx.arc(250, 200, base_radius - offset - Number(r_diff), 0, 2 * Math.PI);
                     ctx.fillStyle = left_color;
                     ctx.globalAlpha = 0.5;
                     ctx.fill();
@@ -140,7 +141,7 @@
 
         var model_answer = {
             type: jsPsychHtmlButtonResponse,
-            stimulus: "正答は「" + (-a) + "」です。",
+            stimulus: "正答は「" + (-a[i]) + "」です。",
             name: "model_answer_" + i,
             choices: ['次に進む']
         };
