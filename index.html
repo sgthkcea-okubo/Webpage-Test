@@ -99,16 +99,14 @@
                   <input type="range" min="-50" max="50" value="0" class="slider" id="myRange">
                   <p>Value: <span id="demo"></span></p>
                 </div>
-                <script>
-                    var slider = document.getElementById("myRange");
-                    var output = document.getElementById("demo");
-                    output.innerHTML = slider.value;
-                    
-                    slider.oninput = function() {
-                      output.innerHTML = this.value;
-                    }
-                var b = slider.value;
-                </script>',
+                var slider = document.getElementById("myRange");
+                var output = document.getElementById("demo");
+                output.innerHTML = slider.value;
+                
+                slider.oninput = function() {
+                  output.innerHTML = this.value;
+                }
+                var b = slider.value,
             name: 'illusion_or_not_' + i , 
             button_choices: ['次に進む'], 
             canvas_width: 1000, 
