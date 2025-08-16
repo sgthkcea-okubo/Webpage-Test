@@ -27,10 +27,10 @@
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function() {
-            url = "https://script.google.com/macros/s/AKfycbzO0xNS-mOYgmIWB1TAXsb8KOhsJqhyNasJYtAoJhBgWyP4OvJv63a4p9P8P3mYjWLH/exec";
+            url = "https://script.google.com/macros/s/AKfycbwnnvCzKl1BkvpREoyqan9yjGol0BTbiy3nVRLtoImkDIIexEFT_WgWMRB3TYfQRX8Q/exec";
             //jsPsych.data.displayData();
             fetch(url, {
-              method: 'GET',
+              method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
