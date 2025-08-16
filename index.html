@@ -63,11 +63,11 @@
             color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1)[0];
         }
         
-        var a = jsPsych.randomization.randomInt(-50, 50)
+        let a = jsPsych.randomization.randomInt(-50, 50)
 
-        var b = 0;
+        let b = 0;
 
-        const illusion_or_not = {
+        let illusion_or_not = {
             type: jsPsychHtmlSliderResponse,
             stimulus: `
                 <div style="width:1000px; margin: 0 auto;">
@@ -89,14 +89,14 @@
             button_label: '次に進む',
             require_movement: true,
             on_load: function() {
-                const base_radius = 100;
+                let base_radius = 100;
                 let offset = a;
                 let left_color = color1;
                 let right_color = color2;
                 function drawIllusion(r_diff) {
-                    const canvas = document.getElementById('illusion_canvas_' + i);
+                    let canvas = document.getElementById('illusion_canvas_' + i);
                     if (!canvas) return;
-                    const ctx = canvas.getContext('2d');
+                    let ctx = canvas.getContext('2d');
                     ctx.clearRect(0,0,canvas.width,canvas.height);
                     // 左円
                     ctx.beginPath();
@@ -118,7 +118,7 @@
                     ctx.stroke();
                 }
                 drawIllusion(0);
-                const slider = document.querySelector('input[type=range]');
+                let slider = document.querySelector('input[type=range]');
                 if(slider){
                     slider.addEventListener('input', function(){
                         drawIllusion(this.value);
