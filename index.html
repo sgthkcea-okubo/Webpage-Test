@@ -133,7 +133,9 @@
                 }
             },
             on_finish: (data) => {
-                data.a = a
+                data.a = a,
+                data.left_color = left_color,
+                data.right_color = right_color
             },
         };
         timeline.push(illusion_or_not);
