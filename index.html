@@ -63,7 +63,7 @@
             color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1)[0];
         }
 
-        var a_${i} = jsPsych.randomization.sampleWithReplacement([-50, 50], 1)[0];
+        var a = jsPsych.randomization.sampleWithReplacement([-50, 50], 1)[0];
         var b = 0;
 
         const illusion_or_not = {
@@ -140,7 +140,7 @@
 
         var model_answer = {
             type: jsPsychHtmlButtonResponse,
-            stimulus: "正答は「" + (-a_${i}) + "」です。",
+            stimulus: "正答は「" + (-a) + "」です。",
             name: "model_answer_" + i,
             choices: ['次に進む']
         };
