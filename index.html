@@ -66,10 +66,11 @@
             var color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1);
             }
 
-       var illusion_or_not = {
+        var a = jsPsych.randomization.sampleWithReplacement([-50, 50], 1);
+        var b = 0;
+        
+        var illusion_or_not = {
             type: jsPsychPsychophysics,
-            var a = jsPsych.randomization.sampleWithReplacement([-50, 50], 1);
-            var b = 0;
             stimuli: [
                 {
                     obj_type: 'circle', // means a circle
