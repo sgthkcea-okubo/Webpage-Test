@@ -55,7 +55,7 @@
             color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1)[0];
         }
 
-        var a = jsPsych.randomization.sampleWithReplacement([-50, 50], 1)[0];
+        var a_${i} = jsPsych.randomization.sampleWithReplacement([-50, 50], 1)[0];
         var b = 0;
 
         const illusion_or_not = {
@@ -80,7 +80,7 @@
             require_movement: true,
             on_load: function() {
                 const base_radius = 100;
-                const offset = a;
+                const offset = a_${i};
                 const left_color = color1;
                 const right_color = color2;
                 function drawIllusion(r_diff) {
@@ -132,7 +132,7 @@
 
         var model_answer = {
             type: jsPsychHtmlButtonResponse,
-            stimulus: "正答は「" + (-a) + "」です。",
+            stimulus: "正答は「" + (-a_${i}) + "」です。",
             name: "model_answer_" + i,
             choices: ['次に進む']
         };
