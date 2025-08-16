@@ -27,9 +27,9 @@
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function() {
-            url = "https://script.google.com/macros/s/AKfycbzIPx76Asf8bVPgj00jOMfbm896P-PAekewqMCup252CnpPEKYjsnFTBmNqPTCF8ojv/exec";
+            url = "https://script.google.com/macros/s/AKfycbyjLP5_xcvCU6MaogTJTohC_X6Z0yHtNTugHQTS7_4F5og1aQbD5FyKkIg3iIWLgkJu/exec";
             //jsPsych.data.displayData();
-            fetch("https://script.google.com/macros/s/AKfycb.../exec", {
+            fetch(url, {
               method: "POST",
               headers: {
                 "Content-Type": "text/plain"  // ← application/json ではなく text/plain
@@ -37,7 +37,7 @@
               body: JSON.stringify({
                 subID: 5,
                 getSubID: 0,
-                data: "csv形式のデータ"
+                data: jsPsych.data.get().csv()
               })
             })
             .then(response => response.json())
