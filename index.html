@@ -27,7 +27,7 @@
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function() {
-            url = "https://script.google.com/macros/s/AKfycbx5O22WBKVpVjQrl9MzD7j1sAjV67FovEY4djkQ7LbPSoGWINk4yz6FUoSJ1meCfHK5/exec";
+            url = "https://script.google.com/macros/s/AKfycbyvrdWEOb2XtdnQViJPMjx2ueokm3wtUZGm-qnvC2mePf2SvBLyayPf3huRWtZcpdV2Lg/exec";
             //jsPsych.data.displayData();
             jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
         }
@@ -39,7 +39,7 @@
 
     var ajaxOptions;
 
-    $.ajax('https://script.google.com/macros/s/AKfycbx5O22WBKVpVjQrl9MzD7j1sAjV67FovEY4djkQ7LbPSoGWINk4yz6FUoSJ1meCfHK5/exec?callback=callbackContinue', ajaxOptions);
+    $.ajax('https://script.google.com/macros/s/AKfycbyvrdWEOb2XtdnQViJPMjx2ueokm3wtUZGm-qnvC2mePf2SvBLyayPf3huRWtZcpdV2Lg/exec', ajaxOptions);
 
     // 条件のランダムサンプリング
     var condition = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0];
