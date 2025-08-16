@@ -27,10 +27,10 @@
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function() {
-            url = "https://script.google.com/macros/s/AKfycbzjAau7lzcw-SGlWbOdGQ27T_f1tTS0gG20t0g7ZyZJEUiVVksEmrzWkZUF6K4_Hrmj/exec";
+            url = "https://script.google.com/macros/s/AKfycbzO0xNS-mOYgmIWB1TAXsb8KOhsJqhyNasJYtAoJhBgWyP4OvJv63a4p9P8P3mYjWLH/exec";
             //jsPsych.data.displayData();
             fetch(url, {
-              method: 'POST',
+              method: 'GET',
               headers: {
                 'Content-Type': 'application/json'
               },
@@ -45,13 +45,13 @@
         }
     });
 
-    window.callbackContinue = function (response) {
-         console.log(response);
-    }
+    // window.callbackContinue = function (response) {
+    //      console.log(response);
+    // }
 
-    var ajaxOptions;
+    // var ajaxOptions;
 
-    $.ajax('https://script.google.com/macros/s/AKfycbzjAau7lzcw-SGlWbOdGQ27T_f1tTS0gG20t0g7ZyZJEUiVVksEmrzWkZUF6K4_Hrmj/exec?callback=callbackContinue', ajaxOptions);
+    // $.ajax('https://script.google.com/macros/s/AKfycbzjAau7lzcw-SGlWbOdGQ27T_f1tTS0gG20t0g7ZyZJEUiVVksEmrzWkZUF6K4_Hrmj/exec?callback=callbackContinue', ajaxOptions);
 
     // 条件のランダムサンプリング
     var condition = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0];
