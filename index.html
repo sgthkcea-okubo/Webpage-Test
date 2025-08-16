@@ -24,7 +24,7 @@
     // timelineの定義を先に移動
     var timeline = 
 
-    fetch(https://script.google.com/macros/s/AKfycbz-a35zPXEvXefkhzLcO8YG754SLkZxuOUVZLyBUItyWvZ8I0h2J7NBLOdktubanVMI/exec, {
+    fetch("https://script.google.com/macros/s/AKfycbyq5Ce-PodSMXyVe089N0RQ2QbIzRrB_KbJ3NDaheR7icbRmF349nvdnzZXW7TjiVVL/exec", {
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -35,7 +35,7 @@
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function () {
-            url = "https://script.google.com/macros/s/AKfycbz-a35zPXEvXefkhzLcO8YG754SLkZxuOUVZLyBUItyWvZ8I0h2J7NBLOdktubanVMI/exec";
+            url = "https://script.google.com/macros/s/AKfycbyq5Ce-PodSMXyVe089N0RQ2QbIzRrB_KbJ3NDaheR7icbRmF349nvdnzZXW7TjiVVL/exec";
             jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
         }
     });
