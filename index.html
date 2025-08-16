@@ -20,23 +20,11 @@
 <body></body>
 
 <script>
-    // var jsPsych = initJsPsych({
-    //     on_finish: function() {
-    //         jsPsych.data.displayData();
-    //     }
-    // });
-
-    const jsPsych = initJsPsych({
-        timeline: timeline,
-        on_finish: function() {
-            url = "https://script.google.com/macros/s/AKfycbwAWhEmQ1w-jnAPvtOmlzykqsUS9ZHZv0ZRpa92KpV-_4938mt0bWAySZG-NZ2x8qU/exec";
-            jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
-        }
-    });
-
+    // timelineの定義を先に移動
     var timeline = [];
 
-    var condition = jsPsych.randomization.sampleWithReplacement([0, 1], 1);
+    // 条件のランダムサンプリング
+    var condition = jsPsych.randomization.sampleWithReplacement([0, 1], 1)[0];
 
     var welcome = {
         type: jsPsychHtmlButtonResponse,
@@ -54,104 +42,110 @@
 
     for (var i = 0; i < num_of_loops; i++) {
 
-        var colorcond1 = jsPsych.randomization.sampleWithReplacement(colorset1, 1);
-        var colorcond2 = jsPsych.randomization.sampleWithReplacement(_.difference(colorset1, colorcond1), 1);
+        var colorcond1 = jsPsych.randomization.sampleWithReplacement(colorset1, 1)[0];
+        var colorcond2 = jsPsych.randomization.sampleWithReplacement(_.difference(colorset1, [colorcond1]), 1)[0];
 
-        var color1 = jsPsych.randomization.sampleWithReplacement(colorcond1, 1);
+        var color1 = jsPsych.randomization.sampleWithReplacement(colorcond1, 1)[0];
 
+        var color2;
         if (condition == 0) {
-            var color2 = jsPsych.randomization.sampleWithReplacement(colorcond1, 1);
-            }
+            color2 = jsPsych.randomization.sampleWithReplacement(colorcond1, 1)[0];
+        }
         else if (condition == 1) {
-            var color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1);
-            }
+            color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1)[0];
+        }
 
-        var a = jsPsych.randomization.sampleWithReplacement([-50, 50], 1);
+        var a = jsPsych.randomization.sampleWithReplacement([-50, 50], 1)[0];
         var b = 0;
-        
-        const illusion_or_not_slider_trial = {
-          type: jsPsychHtmlSliderResponse,
-          stimulus: '
+
+        // stimulusをテンプレートリテラルで生成
+        const illusion_or_not_slider_stimulus = `
             <div style="width:1000px; margin: 0 auto;">
               <p style="text-align:center;">
                 画像に示された2つの図形について、<br>
                 大きさが等しいと感じるようにスライダーの位置を調整し、"次に進む"を押してください。
               </p>
               <div style="display:flex; justify-content:center;">
-                <canvas id="illusion_canvas" width="800" height="400" style="background:white; border:1px solid #ccc;"></canvas>
+                <canvas id="illusion_canvas_${i}" width="800" height="400" style="background:white; border:1px solid #ccc;"></canvas>
               </div>
               <script>
-                // 初期値やパラメータ
-                const base_radius = 100;
-                const offset = {{a}}; // 例: -50 か 50
-                const b = 0;
-                const left_color = "{{color1}}";
-                const right_color = "{{color2}}";
-                // canvas描画関数
-                function drawIllusion(r_diff) {
-                  const canvas = document.getElementById('illusion_canvas');
-                  const ctx = canvas.getContext('2d');
-                  ctx.clearRect(0,0,canvas.width,canvas.height);
-                  // 左円
-                  ctx.beginPath();
-                  ctx.arc(250, 200, base_radius - offset - b, 0, 2 * Math.PI);
-                  ctx.fillStyle = left_color;
-                  ctx.strokeStyle = left_color;
-                  ctx.globalAlpha = 0.5;
-                  ctx.fill();
-                  ctx.globalAlpha = 1.0;
-                  ctx.stroke();
-                  // 右円
-                  ctx.beginPath();
-                  ctx.arc(550, 200, base_radius + offset + Number(r_diff), 0, 2 * Math.PI);
-                  ctx.fillStyle = right_color;
-                  ctx.strokeStyle = right_color;
-                  ctx.globalAlpha = 0.5;
-                  ctx.fill();
-                  ctx.globalAlpha = 1.0;
-                  ctx.stroke();
-                }
-                // 初期描画
-                drawIllusion(0);
-                // スライダーイベント設定
-                window.addEventListener('DOMContentLoaded', function() {
-                  const slider = document.querySelector('input[type=range]');
-                  if(slider){
-                    slider.addEventListener('input', function(){
-                      drawIllusion(this.value);
-                    });
+                (function() {
+                  const base_radius = 100;
+                  const offset = ${a};
+                  const b = 0;
+                  const left_color = "${color1}";
+                  const right_color = "${color2}";
+                  function drawIllusion(r_diff) {
+                    const canvas = document.getElementById('illusion_canvas_${i}');
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
+                    // 左円
+                    ctx.beginPath();
+                    ctx.arc(250, 200, base_radius - offset - b, 0, 2 * Math.PI);
+                    ctx.fillStyle = left_color;
+                    ctx.strokeStyle = left_color;
+                    ctx.globalAlpha = 0.5;
+                    ctx.fill();
+                    ctx.globalAlpha = 1.0;
+                    ctx.stroke();
+                    // 右円
+                    ctx.beginPath();
+                    ctx.arc(550, 200, base_radius + offset + Number(r_diff), 0, 2 * Math.PI);
+                    ctx.fillStyle = right_color;
+                    ctx.strokeStyle = right_color;
+                    ctx.globalAlpha = 0.5;
+                    ctx.fill();
+                    ctx.globalAlpha = 1.0;
+                    ctx.stroke();
                   }
-                });
+                  // 初期描画
+                  drawIllusion(0);
+                  // スライダーイベント設定
+                  window.addEventListener('DOMContentLoaded', function() {
+                    // jsPsychがinput[type=range]を生成してからイベントを付与する
+                    setTimeout(function() {
+                      const slider = document.querySelector('input[type=range]');
+                      if(slider){
+                        slider.addEventListener('input', function(){
+                          drawIllusion(this.value);
+                        });
+                      }
+                    }, 0);
+                  });
+                })();
               </script>
             </div>
-          ',
-          min: -50,
-          max: 50,
-          value: 0,
-          step: 1,
-          labels: ['-50', '0', '50'],
-          button_label: '次に進む',
-          require_movement: true,
-          // stimulus内で {{a}} や {{color1}} などを置き換える場合は trial生成時にテンプレートリテラル等で置換してください
-          // 例: stimulus: my_template.replace('{{a}}', a).replace('{{color1}}', color1)... のように
+        `;
+
+        const illusion_or_not = {
+            type: jsPsychHtmlSliderResponse,
+            stimulus: illusion_or_not_slider_stimulus,
+            min: -50,
+            max: 50,
+            value: 0,
+            step: 1,
+            labels: ['-50', '0', '50'],
+            button_label: '次に進む',
+            require_movement: true,
         };
         timeline.push(illusion_or_not);
 
         var confidence_level = {
             type: jsPsychHtmlSliderResponse,
-            stimulus: '<div style="width:500px;">
-                <p>直前の質問が正しい確率について、<br>自己評価したものを回答してください。</p>
-                </div>',
+            stimulus: '<div style="width:500px;">' +
+                '<p>直前の質問が正しい確率について、<br>自己評価したものを回答してください。</p>' +
+                '</div>',
             name: 'confidence_level_' + i,
             button_label: '次に進む',
             require_movement: true,
-            labels: ['0%', '100%'], 
+            labels: ['0%', '100%'],
         };
         timeline.push(confidence_level);
 
         var model_answer = {
             type: jsPsychHtmlButtonResponse,
-            stimulus: "正答は「" + -a + "」です。",
+            stimulus: "正答は「" + (-a) + "」です。",
             name: "model_answer_" + i,
             choices: ['次に進む']
         };
@@ -159,20 +153,20 @@
     }
 
     var age = {
-      type: jsPsychSurveyText,
-      questions: [
-        {prompt: '年齢を入力してください', columns: 3, required: true, name: 'age'},
-      ],
-      button_label: '次へ',
+        type: jsPsychSurveyText,
+        questions: [
+            { prompt: '年齢を入力してください', columns: 3, required: true, name: 'age' },
+        ],
+        button_label: '次へ',
     };
     timeline.push(age);
 
     var gender = {
-      type: jsPsychSurveyMultiChoice,
-      questions: [
-        {prompt: "性別を選択してください", options: ['男性', '女性', 'その他'], required: true, horizontal: true, name: 'gender'},
-      ],
-      button_label: '次へ',
+        type: jsPsychSurveyMultiChoice,
+        questions: [
+            { prompt: "性別を選択してください", options: ['男性', '女性', 'その他'], required: true, horizontal: true, name: 'gender' },
+        ],
+        button_label: '次へ',
     };
     timeline.push(gender);
 
@@ -183,6 +177,14 @@
         choices: 'a' //'NO_KEYS'
     };
     timeline.push(finish);
+
+    const jsPsych = initJsPsych({
+        timeline: timeline,
+        on_finish: function () {
+            url = "https://script.google.com/macros/s/AKfycbwAWhEmQ1w-jnAPvtOmlzykqsUS9ZHZv0ZRpa92KpV-_4938mt0bWAySZG-NZ2x8qU/exec";
+            jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
+        }
+    });
 
     jsPsych.run(timeline);
 
