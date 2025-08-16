@@ -40,7 +40,7 @@
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function () {
-            const url = "https://script.google.com/macros/s/AKfycbw9f297KUxpU0XuBe1zlrvZC2wlny9N75pyXvyJyxSgQhpD5arD50yJTCJZ3kuqjktR/exec";
+            const url = "https://script.google.com/macros/s/AKfycbyq5Ce-PodSMXyVe089N0RQ2QbIzRrB_KbJ3NDaheR7icbRmF349nvdnzZXW7TjiVVL/exec";
             jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
         }
     });
