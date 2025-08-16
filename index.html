@@ -28,8 +28,8 @@
         timeline: timeline,
         on_finish: function() {
             url = "https://script.google.com/macros/s/AKfycbzM1cv796lVfsN1LZxrP6xmfDymoyTKARf8mulRnWCXbnDM17o-tgnZSrEuziEMQv7l/exec";
-            jsPsych.data.displayData();
-            //jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
+            //jsPsych.data.displayData();
+            jsPsychSheet.uploadData(url, jsPsych.data.get().csv());
         }
     });
 
