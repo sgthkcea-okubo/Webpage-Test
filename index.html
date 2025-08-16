@@ -22,20 +22,7 @@
 
 <script>
     // timelineの定義を先に移動
-    var timeline = [];
-
-    // fetchで外部データを取得する場合、URLやbodyの記述にバグがありました
-    // また、csv_dataが未定義なので関連処理を一旦コメントアウト
-    /*
-    fetch("https://script.google.com/macros/s/AKfycbz-a35zPXEvXefkhzLcO8YG754SLkZxuOUVZLyBUItyWvZ8I0h2J7NBLOdktubanVMI/exec", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-      // GETの場合はbodyは不要です
-      //body: `data=${encodeURIComponent(csv_data)}&subID=-1`
-    });
-    */
+    var timeline = 
 
     const jsPsych = initJsPsych({
         timeline: timeline,
