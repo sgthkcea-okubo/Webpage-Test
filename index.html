@@ -69,60 +69,79 @@
         var a = jsPsych.randomization.sampleWithReplacement([-50, 50], 1);
         var b = 0;
         
-        var illusion_or_not = {
-            type: jsPsychPsychophysics,
-            stimuli: [
-                {
-                    obj_type: 'circle', // means a circle
-                    startX: -200, // location in the canvas
-                    startY: 0,
-                    origin_center: true,
-                    radius: 100 - a - b, // of the circle
-                    line_color: color1,
-                    fill_color: color1,
-                }, 
-                {
-                    obj_type: 'circle', // means a circle
-                    startX: 200, // location in the canvas
-                    startY: 0,
-                    origin_center: true,
-                    radius: 100 + a + b, // of the circle
-                    line_color: color2,
-                    fill_color: color2,
-                }, 
-            ],
-            response_type: 'button',
-            prompt: <div style="width:1000px;">
-                <p style="text-align:center">画像に示された2つの図形について、大きさが等しいと感じるようにスライダーの位置を調整し、"次に進む"を押してください。</p>
-                </div>
-                <div class="slidecontainer">
-                  <input type="range" min="-50" max="50" value="0" class="slider" id="myRange">
-                  <p>Value: <span id="demo"></span></p>
-                </div>
-                var slider = document.getElementById("myRange");
-                var output = document.getElementById("demo");
-                output.innerHTML = slider.value;
-                
-                slider.oninput = function() {
-                  output.innerHTML = this.value;
+        const illusion_or_not_slider_trial = {
+          type: jsPsychHtmlSliderResponse,
+          stimulus: '
+            <div style="width:1000px; margin: 0 auto;">
+              <p style="text-align:center;">
+                画像に示された2つの図形について、<br>
+                大きさが等しいと感じるようにスライダーの位置を調整し、"次に進む"を押してください。
+              </p>
+              <div style="display:flex; justify-content:center;">
+                <canvas id="illusion_canvas" width="800" height="400" style="background:white; border:1px solid #ccc;"></canvas>
+              </div>
+              <script>
+                // 初期値やパラメータ
+                const base_radius = 100;
+                const offset = {{a}}; // 例: -50 か 50
+                const b = 0;
+                const left_color = "{{color1}}";
+                const right_color = "{{color2}}";
+                // canvas描画関数
+                function drawIllusion(r_diff) {
+                  const canvas = document.getElementById('illusion_canvas');
+                  const ctx = canvas.getContext('2d');
+                  ctx.clearRect(0,0,canvas.width,canvas.height);
+                  // 左円
+                  ctx.beginPath();
+                  ctx.arc(250, 200, base_radius - offset - b, 0, 2 * Math.PI);
+                  ctx.fillStyle = left_color;
+                  ctx.strokeStyle = left_color;
+                  ctx.globalAlpha = 0.5;
+                  ctx.fill();
+                  ctx.globalAlpha = 1.0;
+                  ctx.stroke();
+                  // 右円
+                  ctx.beginPath();
+                  ctx.arc(550, 200, base_radius + offset + Number(r_diff), 0, 2 * Math.PI);
+                  ctx.fillStyle = right_color;
+                  ctx.strokeStyle = right_color;
+                  ctx.globalAlpha = 0.5;
+                  ctx.fill();
+                  ctx.globalAlpha = 1.0;
+                  ctx.stroke();
                 }
-                var b = slider.value,
-            name: 'illusion_or_not_' + i , 
-            button_choices: ['次に進む'], 
-            canvas_width: 1000, 
-            canvas_height: 400, 
-            background_color: 'white', 
-            required: true, 
-            origin_center: true,
-            //horizontal: true, 
+                // 初期描画
+                drawIllusion(0);
+                // スライダーイベント設定
+                window.addEventListener('DOMContentLoaded', function() {
+                  const slider = document.querySelector('input[type=range]');
+                  if(slider){
+                    slider.addEventListener('input', function(){
+                      drawIllusion(this.value);
+                    });
+                  }
+                });
+              </script>
+            </div>
+          ',
+          min: -50,
+          max: 50,
+          value: 0,
+          step: 1,
+          labels: ['-50', '0', '50'],
+          button_label: '次に進む',
+          require_movement: true,
+          // stimulus内で {{a}} や {{color1}} などを置き換える場合は trial生成時にテンプレートリテラル等で置換してください
+          // 例: stimulus: my_template.replace('{{a}}', a).replace('{{color1}}', color1)... のように
         };
         timeline.push(illusion_or_not);
 
         var confidence_level = {
             type: jsPsychHtmlSliderResponse,
-            stimulus: <div style="width:500px;">
+            stimulus: '<div style="width:500px;">
                 <p>直前の質問が正しい確率について、<br>自己評価したものを回答してください。</p>
-                </div>`,
+                </div>',
             name: 'confidence_level_' + i,
             button_label: '次に進む',
             require_movement: true,
