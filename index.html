@@ -32,7 +32,7 @@
     });
 
     // 条件のランダムサンプリング
-    var condition = jsPsych.randomization.sampleWithReplacement([0, 1], 1)[0];
+    var condition = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0];
 
     var welcome = {
         type: jsPsychHtmlButtonResponse,
@@ -48,8 +48,6 @@
 
     const num_of_loops = 10;
 
-    var a = jsPsych.randomization.sampleWithReplacement([-50, 50], num_of_loops);
-
     for (let i = 0; i < num_of_loops; i++) {
 
         var colorcond1 = jsPsych.randomization.sampleWithReplacement(colorset1, 1)[0];
@@ -64,6 +62,8 @@
         else if (condition == 1) {
             color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1)[0];
         }
+        
+        var a = jsPsych.randomization.randomInt(-50, 50)
 
         var b = 0;
 
