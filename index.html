@@ -32,7 +32,7 @@
             fetch(url, {
               method: "POST",
               headers: {
-                "Content-Type": "text/plain"  // ← これが重要
+                "Content-Type": "text/plain"  // ← 重要：プリフライト回避
               },
               body: JSON.stringify({
                 subID: 5,
@@ -50,6 +50,7 @@
               }
             })
             .catch(error => console.error("fetch失敗:", error));
+
             //jsPsychSheet.uploadData(url, jsPsych.data.get().csv(), 0)
         }
     });
