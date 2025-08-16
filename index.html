@@ -90,7 +90,7 @@
             require_movement: true,
             on_load: function() {
                 const base_radius = 100;
-                const offset = a[i];
+                const offset = a;
                 const left_color = color1;
                 const right_color = color2;
                 function drawIllusion(r_diff) {
@@ -142,7 +142,7 @@
 
         var model_answer = {
             type: jsPsychHtmlButtonResponse,
-            stimulus: "正答は「" + (-a[i]) + "」です。",
+            stimulus: "正答は「" + (-a) + "」です。",
             name: "model_answer_" + i,
             choices: ['次に進む']
         };
