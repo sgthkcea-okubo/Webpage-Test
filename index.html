@@ -38,10 +38,8 @@
     }
 
     var ajaxOptions;
-    
-    url = "https://script.google.com/macros/s/AKfycbzjAau7lzcw-SGlWbOdGQ27T_f1tTS0gG20t0g7ZyZJEUiVVksEmrzWkZUF6K4_Hrmj/exec";
 
-    $.ajax(url + '?callback=callbackContinue', ajaxOptions);
+    $.ajax('https://script.google.com/macros/s/AKfycbzjAau7lzcw-SGlWbOdGQ27T_f1tTS0gG20t0g7ZyZJEUiVVksEmrzWkZUF6K4_Hrmj/exec?callback=callbackContinue', ajaxOptions);
 
     // 条件のランダムサンプリング
     var condition = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0];
