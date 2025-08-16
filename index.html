@@ -58,69 +58,19 @@
         var a = jsPsych.randomization.sampleWithReplacement([-50, 50], 1)[0];
         var b = 0;
 
-        // stimulusをテンプレートリテラルで生成
-        const illusion_or_not_slider_stimulus = `
-            <div style="width:1000px; margin: 0 auto;">
-              <p style="text-align:center;">
-                画像に示された2つの図形について、<br>
-                大きさが等しいと感じるようにスライダーの位置を調整し、"次に進む"を押してください。
-              </p>
-              <div style="display:flex; justify-content:center;">
-                <canvas id="illusion_canvas_${i}" width="800" height="400" style="background:white; border:1px solid #ccc;"></canvas>
-              </div>
-              <script>
-                (function() {
-                  const base_radius = 100;
-                  const offset = ${a};
-                  const b = 0;
-                  const left_color = "${color1}";
-                  const right_color = "${color2}";
-                  function drawIllusion(r_diff) {
-                    const canvas = document.getElementById('illusion_canvas_${i}');
-                    if (!canvas) return;
-                    const ctx = canvas.getContext('2d');
-                    ctx.clearRect(0,0,canvas.width,canvas.height);
-                    // 左円
-                    ctx.beginPath();
-                    ctx.arc(250, 200, base_radius - offset - b, 0, 2 * Math.PI);
-                    ctx.fillStyle = left_color;
-                    ctx.strokeStyle = left_color;
-                    ctx.globalAlpha = 0.5;
-                    ctx.fill();
-                    ctx.globalAlpha = 1.0;
-                    ctx.stroke();
-                    // 右円
-                    ctx.beginPath();
-                    ctx.arc(550, 200, base_radius + offset + Number(r_diff), 0, 2 * Math.PI);
-                    ctx.fillStyle = right_color;
-                    ctx.strokeStyle = right_color;
-                    ctx.globalAlpha = 0.5;
-                    ctx.fill();
-                    ctx.globalAlpha = 1.0;
-                    ctx.stroke();
-                  }
-                  // 初期描画
-                  drawIllusion(0);
-                  // スライダーイベント設定
-                  window.addEventListener('DOMContentLoaded', function() {
-                    // jsPsychがinput[type=range]を生成してからイベントを付与する
-                    setTimeout(function() {
-                      const slider = document.querySelector('input[type=range]');
-                      if(slider){
-                        slider.addEventListener('input', function(){
-                          drawIllusion(this.value);
-                        });
-                      }
-                    }, 0);
-                  });
-                })();
-              </script>
-            </div>
-        `;
-
         const illusion_or_not = {
             type: jsPsychHtmlSliderResponse,
-            stimulus: illusion_or_not_slider_stimulus,
+            stimulus: `
+                <div style="width:1000px; margin: 0 auto;">
+                  <p style="text-align:center;">
+                    画像に示された2つの図形について、<br>
+                    大きさが等しいと感じるようにスライダーの位置を調整し、"次に進む"を押してください。
+                  </p>
+                  <div style="display:flex; justify-content:center;">
+                    <canvas id="illusion_canvas_${i}" width="800" height="400" style="background:white; border:1px solid #ccc;"></canvas>
+                  </div>
+                </div>
+            `,
             min: -50,
             max: 50,
             value: 0,
@@ -128,6 +78,43 @@
             labels: ['-50', '0', '50'],
             button_label: '次に進む',
             require_movement: true,
+            on_load: function() {
+                const base_radius = 100;
+                const offset = a;
+                const left_color = color1;
+                const right_color = color2;
+                function drawIllusion(r_diff) {
+                    const canvas = document.getElementById('illusion_canvas_' + i);
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
+                    // 左円
+                    ctx.beginPath();
+                    ctx.arc(250, 200, base_radius - offset, 0, 2 * Math.PI);
+                    ctx.fillStyle = left_color;
+                    ctx.globalAlpha = 0.5;
+                    ctx.fill();
+                    ctx.globalAlpha = 1.0;
+                    ctx.strokeStyle = left_color;
+                    ctx.stroke();
+                    // 右円
+                    ctx.beginPath();
+                    ctx.arc(550, 200, base_radius + offset + Number(r_diff), 0, 2 * Math.PI);
+                    ctx.fillStyle = right_color;
+                    ctx.globalAlpha = 0.5;
+                    ctx.fill();
+                    ctx.globalAlpha = 1.0;
+                    ctx.strokeStyle = right_color;
+                    ctx.stroke();
+                }
+                drawIllusion(0);
+                const slider = document.querySelector('input[type=range]');
+                if(slider){
+                    slider.addEventListener('input', function(){
+                        drawIllusion(this.value);
+                    });
+                }
+            }
         };
         timeline.push(illusion_or_not);
 
