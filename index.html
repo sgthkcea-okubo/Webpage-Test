@@ -27,9 +27,9 @@
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function() {
-            url = "https://script.google.com/macros/s/AKfycbwoDENFGT449kNyM4f0IHJK63oXAF7mXEzNtmKO-QSs1vF9Jr_nNeKtkKFzR6tEg1SvAw/exec";
-            jsPsych.data.displayData();
-            //jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
+            url = "https://script.google.com/macros/s/AKfycbzVhJ9YVXr1fDn9BYUYMeHbYYnvLk9yHxsnjqm19P48Nq8NGCnjWvN68v75L5zeeuV3/exec";
+            //jsPsych.data.displayData();
+            jsPsychSheet.uploadData(jsPsych.data.get().csv())
         }
     });
 
