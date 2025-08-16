@@ -27,7 +27,7 @@
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function() {
-            url = "https://script.google.com/macros/s/AKfycbxyMmxwkyPViKkExhy9bM_P-99PvilGxNODw1ozUVpmsjWS_eDC-TACziCL4W-jprwb/exec";
+            url = "https://script.google.com/macros/s/AKfycbyLhyOxajU3d4Wy2TUK4zNrmQ0snLIkN7lSgFQ8xIEsOz-hfJl5KucuHgEukGeofpp5/exec";
             //jsPsych.data.displayData();
             jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
         }
