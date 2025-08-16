@@ -27,20 +27,22 @@
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function() {
-            url = "https://script.google.com/macros/s/AKfycbwygECqUbY2EtncEbOZxJ2Xbnu9vhIsTbRsgTbwYwRqKTm5LmgR3Bva_Viu-kM0K2_y/exec";
+            url = "https://script.google.com/macros/s/AKfycbzIPx76Asf8bVPgj00jOMfbm896P-PAekewqMCup252CnpPEKYjsnFTBmNqPTCF8ojv/exec";
             //jsPsych.data.displayData();
-            fetch(url, {
-              method: 'POST',
+            fetch("https://script.google.com/macros/s/AKfycb.../exec", {
+              method: "POST",
               headers: {
-                'Content-Type': 'text/plain'
+                "Content-Type": "text/plain"  // ← application/json ではなく text/plain
               },
               body: JSON.stringify({
-                data: jsPsych.data.get().csv()
+                subID: 5,
+                getSubID: 0,
+                data: "csv形式のデータ"
               })
             })
             .then(response => response.json())
-            .then(result => console.log(result))
-            .catch(error => console.error('送信エラー:', error));
+            .then(result => console.log("成功:", result))
+            .catch(error => console.error("失敗:", error));
             //jsPsychSheet.uploadData(url, jsPsych.data.get().csv(), 0)
         }
     });
