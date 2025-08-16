@@ -23,10 +23,18 @@
     // timelineの定義を先に移動
     var timeline = [];
 
+    fetch(GAS_URL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `data=${encodeURIComponent(csv_data)}&subID=-1`
+    });
+
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function () {
-            url = "https://script.google.com/macros/s/AKfycby0zb4x6o5LaDaJR5RMWLbWyaEGGf5zC6mmR4HfaC7ASzV0kL6_XIY5RQXkYs_mgkD2/exec";
+            url = "https://script.google.com/macros/s/AKfycbz-a35zPXEvXefkhzLcO8YG754SLkZxuOUVZLyBUItyWvZ8I0h2J7NBLOdktubanVMI/exec";
             jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
         }
     });
