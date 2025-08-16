@@ -134,7 +134,9 @@
                     rDiffSpan.textContent = slider.value;
                 }
             },
-            on_finish: data.a = a,
+            on_finish: (data) => {
+                data.a = a
+            },
         };
         timeline.push(illusion_or_not);
 
