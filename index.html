@@ -48,7 +48,7 @@
 
     const num_of_loops = 10;
 
-    for (var i = 0; i < num_of_loops; i++) {
+    for (let i = 0; i < num_of_loops; i++) {
 
         var colorcond1 = jsPsych.randomization.sampleWithReplacement(colorset1, 1)[0];
         var colorcond2 = jsPsych.randomization.sampleWithReplacement(_.difference(colorset1, [colorcond1]), 1)[0];
