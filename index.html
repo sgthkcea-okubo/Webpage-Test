@@ -85,7 +85,6 @@
                   </div>
                 </div>
             `,
-            data: a_${i}: a
             min: -50,
             max: 50,
             slider_start: 0,
@@ -135,6 +134,9 @@
                     rDiffSpan.textContent = slider.value;
                 }
             }
+            on_finish: (data) => {
+                data.a_${i} = a; // 例：反応時間を1000で割った値をnewDataに追加
+            },
         };
         timeline.push(illusion_or_not);
 
