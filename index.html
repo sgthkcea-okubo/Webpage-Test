@@ -256,9 +256,10 @@
     var thanks = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '<p>これでアンケートは終わりです。<br>' +
-            'ありがとうございました。(press the "A" key to send data.)<br>' +
             '以下のパスワードを、記録したうえで、活動報告の欄に入力してください。<br>' +
-            'Pass: xxxxxxxx</p>',
+            'Pass: xxxxxxxx<br>' +
+            'パスワードの記録が済み次第、タブを閉じ実験への参加を終了してください。ありがとうございました。<br>' +
+            '実験に協力いただき、ありがとうございました。</p>',
       choices: 'NO_KEYS'
     };
     timeline.push(finish);
