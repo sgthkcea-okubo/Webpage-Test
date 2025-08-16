@@ -26,38 +26,6 @@
 
     const jsPsych = initJsPsych({
         timeline: timeline,
-        on_finish: function() {
-            function escapeCSV(value) {
-              return `"${String(value).replace(/"/g, '""')}"`;
-            }
-
-            url = "https://script.google.com/macros/s/AKfycbw2lLU_IIebHnUlAV-XT6-ZagKFaqjmCKizfSLsRFY5yvazMGTnd16XzlKrQ4k5LNc/exec";
-            //jsPsych.data.displayData();
-            
-            fetch(url, {
-              method: "POST",
-              headers: {
-                "Content-Type": "text/plain"  // ← 重要：プリフライト回避
-              },
-              body: JSON.stringify({
-                subID: null,
-                getSubID: 0,
-                data: jsPsych.data.get().csv()
-              })
-            })
-            .then(response => response.text())  // ← JSONではなくtextで受け取る
-            .then(text => {
-              try {
-                const result = JSON.parse(text);
-                console.log("成功:", result);
-              } catch (e) {
-                console.error("JSONパース失敗:", text);
-              }
-            })
-            .catch(error => console.error("fetch失敗:", error));
-
-            //jsPsychSheet.uploadData(url, jsPsych.data.get().csv(), 0)
-        }
     });
 
     // window.callbackContinue = function (response) {
@@ -244,10 +212,54 @@
     timeline.push(gender);
 
     var finish = {
-        type: jsPsychHtmlKeyboardResponse,
+        type: jsPsychHtmlButtonResponse,
         stimulus: '<p>これでアンケートは終わりです。<br>' +
-            'ありがとうございました。(press the "A" key to send data.)</p>',
-        choices: 'a' //'NO_KEYS'
+            '以下のボタンから回答を送信してください。' +
+            '回答データの送信後、活動報告に記入していただくパスワードが表示されます。</p>',
+        choices: '回答データを送信',
+        on_finish: 
+        on_finish: function() {
+            function escapeCSV(value) {
+              return `"${String(value).replace(/"/g, '""')}"`;
+            }
+
+            url = "https://script.google.com/macros/s/AKfycbw2lLU_IIebHnUlAV-XT6-ZagKFaqjmCKizfSLsRFY5yvazMGTnd16XzlKrQ4k5LNc/exec";
+            //jsPsych.data.displayData();
+            
+            fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "text/plain"  // ← 重要：プリフライト回避
+              },
+              body: JSON.stringify({
+                subID: null,
+                getSubID: 0,
+                data: jsPsych.data.get().csv()
+              })
+            })
+            .then(response => response.text())  // ← JSONではなくtextで受け取る
+            .then(text => {
+              try {
+                const result = JSON.parse(text);
+                console.log("成功:", result);
+              } catch (e) {
+                console.error("JSONパース失敗:", text);
+              }
+            })
+            .catch(error => console.error("fetch失敗:", error));
+
+            //jsPsychSheet.uploadData(url, jsPsych.data.get().csv(), 0)
+        }
+    };
+    timeline.push(finish);
+
+    var thanks = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<p>これでアンケートは終わりです。<br>' +
+            'ありがとうございました。(press the "A" key to send data.)<br>' +
+            '以下のパスワードを、記録したうえで、活動報告の欄に入力してください。<br>' +
+            'Pass: xxxxxxxx</p>',
+      choices: 'NO_KEYS'
     };
     timeline.push(finish);
 
