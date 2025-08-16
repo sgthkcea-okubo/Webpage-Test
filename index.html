@@ -121,11 +121,15 @@
                     ctx.stroke();
                 }
                 drawIllusion(0);
-                let slider = document.querySelector('input[type=range]');
-                if(slider){
-                    slider.addEventListener('input', function(){
+                const slider = document.querySelector('input[type=range]');
+                const rDiffSpan = document.getElementById('r_diff_value_' + i);
+                if (slider && rDiffSpan) {
+                    slider.addEventListener('input', function() {
                         drawIllusion(this.value);
+                        rDiffSpan.textContent = this.value; // ここでリアルタイム表示
                     });
+                    // 初期値表示
+                    rDiffSpan.textContent = slider.value;
                 }
             }
         };
