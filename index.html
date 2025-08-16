@@ -23,18 +23,23 @@
     // timelineの定義を先に移動
     var timeline = [];
 
-    fetch(https://script.google.com/macros/s/AKfycbz-a35zPXEvXefkhzLcO8YG754SLkZxuOUVZLyBUItyWvZ8I0h2J7NBLOdktubanVMI/exec, {
+    // fetchで外部データを取得する場合、URLやbodyの記述にバグがありました
+    // また、csv_dataが未定義なので関連処理を一旦コメントアウト
+    /*
+    fetch("https://script.google.com/macros/s/AKfycbz-a35zPXEvXefkhzLcO8YG754SLkZxuOUVZLyBUItyWvZ8I0h2J7NBLOdktubanVMI/exec", {
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `data=${encodeURIComponent(csv_data)}&subID=-1`
+      }
+      // GETの場合はbodyは不要です
+      //body: `data=${encodeURIComponent(csv_data)}&subID=-1`
     });
+    */
 
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function () {
-            url = "https://script.google.com/macros/s/AKfycbz-a35zPXEvXefkhzLcO8YG754SLkZxuOUVZLyBUItyWvZ8I0h2J7NBLOdktubanVMI/exec";
+            const url = "https://script.google.com/macros/s/AKfycbz-a35zPXEvXefkhzLcO8YG754SLkZxuOUVZLyBUItyWvZ8I0h2J7NBLOdktubanVMI/exec";
             jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
         }
     });
@@ -71,7 +76,7 @@
             color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1)[0];
         }
         
-        let a = jsPsych.randomization.randomInt(-50, 50)
+        let a = jsPsych.randomization.randomInt(-50, 50);
 
         let b = 0;
 
