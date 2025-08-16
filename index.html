@@ -168,11 +168,14 @@
 
         var model_answer = {
             type: jsPsychHtmlButtonResponse,
-            stimulus: "正答は「" + (-a) + "」であり、あなたの回答は<span id="r_diff_value_${i}">0</span>です。",
+            stimulus: function() {
+                // 直前（illusion_or_not）の回答値を取得
+                var last_response = jsPsych.data.get().last(2).values()[0].response;
+                return `正答は「${-a}」であり、あなたの回答は${last_response}です。`;
+            },
             name: "model_answer_" + i,
             choices: ['次に進む']
         };
-        timeline.push(model_answer);
     }
 
     var age = {
