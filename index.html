@@ -29,7 +29,19 @@
         on_finish: function() {
             url = "https://script.google.com/macros/s/AKfycbzjAau7lzcw-SGlWbOdGQ27T_f1tTS0gG20t0g7ZyZJEUiVVksEmrzWkZUF6K4_Hrmj/exec";
             //jsPsych.data.displayData();
-            jsPsychSheet.uploadData(url, jsPsych.data.get().csv(), 0)
+            fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                data: jsPsych.data.get().csv()
+              })
+            })
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => console.error('送信エラー:', error));
+            //jsPsychSheet.uploadData(url, jsPsych.data.get().csv(), 0)
         }
     });
 
