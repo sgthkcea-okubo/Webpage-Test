@@ -196,7 +196,12 @@
     var gender = {
         type: jsPsychSurveyMultiChoice,
         questions: [
-            { prompt: "性別を選択してください", options: ['男性', '女性', 'その他'], required: true, horizontal: true, name: 'gender' },
+            {prompt: "性別を選択してください",
+             options: jsPsych.randomization.repeat(['男性', '女性', 'その他'], 1),
+             required: true,
+             horizontal: true,
+             name: 'gender' 
+            },
         ],
         button_label: '次へ',
     };
