@@ -65,6 +65,9 @@
             color2 = jsPsych.randomization.sampleWithReplacement(colorcond2, 1)[0];
         }
         
+        let left_color = color1;
+        let right_color = color2;
+        
         let a = jsPsych.randomization.randomInt(-50, 50);
 
         let illusion_or_not = {
@@ -94,8 +97,6 @@
             on_load: function() {
                 let base_radius = 100;
                 let offset = a;
-                let left_color = color1;
-                let right_color = color2;
                 function drawIllusion(r_diff) {
                     let canvas = document.getElementById('illusion_canvas_' + i);
                     if (!canvas) return;
