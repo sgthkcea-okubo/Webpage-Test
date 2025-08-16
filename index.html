@@ -134,8 +134,7 @@
                     rDiffSpan.textContent = slider.value;
                 }
             }
-            on_finish: (data) => {
-                data.a_${i} = a; // 例：反応時間を1000で割った値をnewDataに追加
+            on_finish: data.a_${i} = a;
             },
         };
         timeline.push(illusion_or_not);
