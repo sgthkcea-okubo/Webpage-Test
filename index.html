@@ -32,7 +32,7 @@
             fetch(url, {
               method: "POST",
               headers: {
-                "Content-Type": "text/plain"  // ← application/json ではなく text/plain
+                "Content-Type": "text/plain"  // ← これが重要
               },
               body: JSON.stringify({
                 subID: 5,
@@ -40,9 +40,16 @@
                 data: jsPsych.data.get().csv()
               })
             })
-            .then(response => response.json())
-            .then(result => console.log("成功:", result))
-            .catch(error => console.error("失敗:", error));
+            .then(response => response.text())  // ← JSONではなくtextで受け取る
+            .then(text => {
+              try {
+                const result = JSON.parse(text);
+                console.log("成功:", result);
+              } catch (e) {
+                console.error("JSONパース失敗:", text);
+              }
+            })
+            .catch(error => console.error("fetch失敗:", error));
             //jsPsychSheet.uploadData(url, jsPsych.data.get().csv(), 0)
         }
     });
