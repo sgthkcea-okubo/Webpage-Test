@@ -24,14 +24,6 @@
     // timelineの定義を先に移動
     var timeline = 
 
-    fetch("https://script.google.com/macros/s/AKfycbyq5Ce-PodSMXyVe089N0RQ2QbIzRrB_KbJ3NDaheR7icbRmF349nvdnzZXW7TjiVVL/exec", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `data=${encodeURIComponent(csv_data)}&subID=-1`
-    });
-
     const jsPsych = initJsPsych({
         timeline: timeline,
         on_finish: function () {
